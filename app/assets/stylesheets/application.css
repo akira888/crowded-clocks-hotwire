@@ -8,3 +8,66 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+:root {
+  --hand-color: #666;
+  --rim-color: #fdfdfd;
+  --color-background: #fff;
+  --color-text: #000;
+}
+#space {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 4rem 0;
+  font-weight: normal;
+}
+#grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+.rim {
+  border: 2px solid var(--rim-color);
+  width: 100%;
+  border-radius: 50%;
+  position: relative;
+}
+.rim::before,
+.big-hand::before,
+.small-hand::before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+}
+.big-hand,
+.small-hand {
+  display: block;
+  position: absolute;
+  transition-duration: 1.2s;
+}
+.small-hand {
+  left: 9%;
+  top: 9%;
+  width: 82%;
+}
+.big-hand {
+  width: 95%;
+  left: calc(2.5%);
+  top: 2.5%;
+}
+.big-hand::after,
+.small-hand::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background-color: var(--hand-color);
+  width: 50%;
+  position: absolute;
+}
+.big-hand::after {
+  top: calc(50% - 1px);
+}
+.small-hand::after {
+  top: calc(50% - 1px);
+}
+b {
+  color: blueviolet;
+}
