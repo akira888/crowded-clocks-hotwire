@@ -20,10 +20,6 @@
   padding: 4rem 0;
   font-weight: normal;
 }
-#grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-}
 .rim {
   border: 2px solid var(--rim-color);
   width: 100%;
