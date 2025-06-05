@@ -1,10 +1,10 @@
 <div id="space" class="">
-  <div class="grid grid-cols-20">
+  <div class="grid" style="grid-template-columns: repeat(<%= @cols %>, minmax(0, 1fr))">
     <div class="items">
       <div class="clocks">
         <div class="rim">
-          <span class="big-hand rotate-[45.3deg]"></span>
-          <span class="small-hand"></span>
+          <span class="big-hand" style="rotate: <%= @big_hand_deg %>"></span>
+          <span class="small-hand" style="rotate: <%= @small_hand_deg %>"></span>
         </div>
       </div>
     </div>
