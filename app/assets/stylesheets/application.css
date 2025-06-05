@@ -14,12 +14,6 @@
   --color-background: #fff;
   --color-text: #000;
 }
-#space {
-  max-width: 90%;
-  margin: 0 auto;
-  padding: 4rem 0;
-  font-weight: normal;
-}
 .rim {
   border: 2px solid var(--rim-color);
   width: 100%;
