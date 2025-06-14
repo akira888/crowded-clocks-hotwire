@@ -4,6 +4,8 @@ class ClocksController < ApplicationController
     @cols = 10
     @big_hand_deg = "#{minute_degree}deg"
     @small_hand_deg = "#{hour_degree}deg"
+    @is_reset_interval = reset_interval?
+    @interval = 1000
   end
 
   private
@@ -19,6 +21,10 @@ class ClocksController < ApplicationController
   def next_time
     # １秒進める（つぎのポジションを返す）
     @next_time ||= Time.now.advance(seconds: 1)
+  end
+
+  def reset_interval?
+    false
   end
 end
 
