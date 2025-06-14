@@ -1,12 +1,17 @@
 <div id="space" class="grid h-full">
-  <div class="grid content-center" style="grid-template-columns: repeat(<%= @cols %> , minmax(0, 1fr))">
-    <div class="items">
-      <div class="clocks">
-        <div class="rim">
-          <span class="big-hand" style="rotate: <%= @big_hand_deg %>"></span>
-          <span class="small-hand" style="rotate: <%= @small_hand_deg %>"></span>
+  <div
+    class="grid content-center"
+    style="grid-template-columns: repeat(<%= @cols %> , minmax(0, 1fr))"
+  >
+    <div class="items" data-controller="items">
+    <%= turbo_frame_tag :first_clock do %>
+        <div class="clocks">
+          <div class="rim">
+            <span class="big-hand" style="rotate: <%= @big_hand_deg %>" data-items-big-deg-value="<%= @big_hand_deg %>"></span>
+            <span class="small-hand" style="rotate: <%= @small_hand_deg %>" data-items-small-deg-value="<%= @small_hand_deg %>"></span>
+          </div>
         </div>
-      </div>
+    <% end %>
     </div>
   </div>
 </div>
