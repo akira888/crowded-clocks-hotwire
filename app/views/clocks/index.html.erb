@@ -4,8 +4,8 @@
       class="grid content-center"
       style="grid-template-columns: repeat(<%= @cols %> , minmax(0, 1fr))"
       data-controller="clocks"
-      data-clocks-msec-value="<%= @interval %>"
-      data-clocks-reset-interval-value="<%= @is_reset_interval %>"
+      data-clocks-reset-value="<%= reset_interval? %>"
+      data-clocks-adjust-interval-value="<%= adjust_interval %>"
       data-clocks-interval-outlet="#interval"
     >
       <div class="items">

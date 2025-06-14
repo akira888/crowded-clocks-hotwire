@@ -1,11 +1,10 @@
 class ClocksController < ApplicationController
   STANDARD_HAND_DEGREE = 90.0
   def index
-    @cols = 10
+    @cols = 2
     @big_hand_deg = "#{minute_degree}deg"
     @small_hand_deg = "#{hour_degree}deg"
     @is_reset_interval = reset_interval?
-    @interval = 1000
   end
 
   private

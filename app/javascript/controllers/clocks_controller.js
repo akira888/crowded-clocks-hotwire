@@ -3,23 +3,28 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="clocks"
 export default class extends Controller {
   static values = {
-    resetInterval: Boolean,
-    msec: Number,
+    reset: Boolean,
+    adjustInterval: Number,
     bigHandDeg: String,
     smallHandDeg: String
   }
   static outlets = ['interval']
+
+  // Turbo Frames用
   connect() {
-    if (this.resetIntervalValue && this.hasIntervalOutlet) {
-      this.intervalOutlet.intervalMsecValue = this.msecValue
-      this.intervalOutlet.startInterval()
-    }
+    if (!this.hasIntervalOutlet) return;
+    this.callInterval()
   }
 
+  // 画面初期表示用
   intervalOutletConnected() {
-    if (this.intervalOutlet.intervalMsecValue !== this.msecValue) {
-      console.log(this.msecValue)
-      this.intervalOutlet.intervalMsecValue = this.msecValue
+    this.callInterval()
+  }
+
+  callInterval() {
+    if (this.resetValue) {
+      this.intervalOutlet.adjustInterval(this.adjustIntervalValue)
+    } else {
       this.intervalOutlet.startInterval()
     }
   }
