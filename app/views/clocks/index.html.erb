@@ -1,24 +1,17 @@
 <div id="space" class="grid h-full">
-  <%= turbo_frame_tag :clocks do %>
+  <%= turbo_frame_tag :clocks, class:'content-center col-start-1 row-start-1' do %>
     <div
-      class="grid content-center"
+      class="grid"
       style="grid-template-columns: repeat(<%= @cols %> , minmax(0, 1fr))"
       data-controller="clocks"
       data-clocks-reset-value="<%= reset_interval? %>"
       data-clocks-adjust-interval-value="<%= adjust_interval %>"
       data-clocks-interval-outlet="#interval"
     >
-      <div class="items">
-          <div class="clock">
-            <div class="rim">
-              <span class="big-hand" style="rotate: <%= @big_hand_deg %>"></span>
-              <span class="small-hand" style="rotate: <%= @small_hand_deg %>"></span>
-            </div>
-          </div>
-      </div>
+      <%= render @clocks %>
     </div>
   <% end %>
-  <div data-controller="interval" id="interval">
-    <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks">reload</a>
+  <div data-controller="interval" id="interval" class="col-start-1 row-start-1">
+    <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks"></a>
   </div>
 </div>
