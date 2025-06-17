@@ -1,7 +1,7 @@
 <div id="space" class="grid h-full">
-  <%= turbo_frame_tag :clocks do %>
+  <%= turbo_frame_tag :clocks, class:'content-center col-start-1 row-start-1' do %>
     <div
-      class="grid content-center"
+      class="grid"
       style="grid-template-columns: repeat(<%= @cols %> , minmax(0, 1fr))"
       data-controller="clocks"
       data-clocks-reset-value="<%= reset_interval? %>"
@@ -11,7 +11,7 @@
       <%= render @clocks %>
     </div>
   <% end %>
-  <div data-controller="interval" id="interval">
-    <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks">reload</a>
+  <div data-controller="interval" id="interval" class="col-start-1 row-start-1">
+    <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks"></a>
   </div>
 </div>

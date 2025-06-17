@@ -1,7 +1,7 @@
 class ClocksController < ApplicationController
   def index
-    @cols = 2
-    @rows = 2
+    @cols = 20
+    @rows = 7
     @clocks = ClocksFactory.create(@cols, @rows, pattern, start)
   end
 
