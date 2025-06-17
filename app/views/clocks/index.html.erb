@@ -8,14 +8,7 @@
       data-clocks-adjust-interval-value="<%= adjust_interval %>"
       data-clocks-interval-outlet="#interval"
     >
-      <div class="items">
-          <div class="clock">
-            <div class="rim">
-              <span class="big-hand" style="rotate: <%= @big_hand_deg %>"></span>
-              <span class="small-hand" style="rotate: <%= @small_hand_deg %>"></span>
-            </div>
-          </div>
-      </div>
+      <%= render @clocks %>
     </div>
   <% end %>
   <div data-controller="interval" id="interval">
