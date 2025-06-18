@@ -5,7 +5,7 @@ class Clock
 
   STANDARD_HAND_DEGREE = 90.0
 
-  def initialize(id, pattern,start=nil)
+  def initialize(id, pattern, start = nil)
     @id = id
     @pattern = pattern
     @big_hand_angle = nil
