@@ -14,6 +14,6 @@ module ClocksHelper
   private
 
   def millisecond
-    @millisecond ||= Time.now.strftime('%L').to_i
+    @millisecond ||= Time.now.strftime("%L").to_i
   end
 end

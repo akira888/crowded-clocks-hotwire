@@ -1,8 +1,9 @@
 class ClocksController < ApplicationController
   def index
-    @cols = 20
-    @rows = 7
-    @clocks = ClocksFactory.create(@cols, @rows, pattern, start)
+    margin = 2
+    factory = ClocksFactory.new(margin, pattern, start)
+    @clocks = factory.create
+    @cols = factory.matrix_width
   end
 
   private
@@ -15,4 +16,3 @@ class ClocksController < ApplicationController
     "flat"
   end
 end
-
