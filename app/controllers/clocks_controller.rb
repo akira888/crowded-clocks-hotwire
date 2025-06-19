@@ -16,4 +16,3 @@ class ClocksController < ApplicationController
     "flat"
   end
 end
-

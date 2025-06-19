@@ -1,7 +1,7 @@
 module AnalogClock
   BASE_HAND_DEGREE = 90.0
   def analog_angles
-      [next_minute_angle, next_hour_angle]
+      [ next_minute_angle, next_hour_angle ]
   end
 
   def next_minute_angle
