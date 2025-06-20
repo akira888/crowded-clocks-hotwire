@@ -26,9 +26,9 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         allow(DigitalPartsMap).to receive(:by_number).with(1).and_return(
-          [:not_parts, :not_parts, :down_down, :not_parts, :not_parts, :down_up,
+          [ :not_parts, :not_parts, :down_down, :not_parts, :not_parts, :down_up,
            :not_parts, :not_parts, :down_up, :not_parts, :not_parts, :down_up,
-           :not_parts, :not_parts, :up_up]
+           :not_parts, :not_parts, :up_up ]
         )
       end
 
@@ -44,9 +44,9 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         allow(DigitalPartsMap).to receive(:by_number).with(2).and_return(
-          [:right_right, :left_right, :down_left, :not_parts, :not_parts, :down_up,
+          [ :right_right, :left_right, :down_left, :not_parts, :not_parts, :down_up,
            :down_right, :left_right, :up_left, :down_up, :not_parts, :not_parts,
-           :up_right, :left_right, :left_left]
+           :up_right, :left_right, :left_left ]
         )
       end
 
@@ -69,7 +69,7 @@ RSpec.describe Clock::DigitalPart do
       end
 
       it 'アナログ時計の角度を返す' do
-        allow(digital_part).to receive(:analog_angles).and_return([180, 90])
+        allow(digital_part).to receive(:analog_angles).and_return([ 180, 90 ])
         expect(digital_part.big_hand_angle).to eq('180deg')
         expect(digital_part.small_hand_angle).to eq('90deg')
       end

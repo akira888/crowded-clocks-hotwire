@@ -4,27 +4,27 @@ RSpec.describe Angle do
   describe '.fixed_angles' do
     context '有効なキーワードが渡された場合' do
       it 'upは90度を返す' do
-        expect(Angle.fixed_angles('up')).to eq([90])
+        expect(Angle.fixed_angles('up')).to eq([ 90 ])
       end
 
       it 'downは270度を返す' do
-        expect(Angle.fixed_angles('down')).to eq([270])
+        expect(Angle.fixed_angles('down')).to eq([ 270 ])
       end
 
       it 'leftは0度を返す' do
-        expect(Angle.fixed_angles('left')).to eq([0])
+        expect(Angle.fixed_angles('left')).to eq([ 0 ])
       end
 
       it 'rightは180度を返す' do
-        expect(Angle.fixed_angles('right')).to eq([180])
+        expect(Angle.fixed_angles('right')).to eq([ 180 ])
       end
 
       it '複合キーワード "up_right" は [90, 180] を返す' do
-        expect(Angle.fixed_angles('up_right')).to eq([90, 180])
+        expect(Angle.fixed_angles('up_right')).to eq([ 90, 180 ])
       end
 
       it '複合キーワード "left_down" は [0, 270] を返す' do
-        expect(Angle.fixed_angles('left_down')).to eq([0, 270])
+        expect(Angle.fixed_angles('left_down')).to eq([ 0, 270 ])
       end
     end
 
