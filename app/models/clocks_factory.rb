@@ -1,10 +1,9 @@
 class ClocksFactory
-  # プレースホルダー文字の定数
   NORMAL_PARTS = "x".freeze
-
-  NON_DIGITAL_PARTS = [ NORMAL_PARTS, "4", "a" ].freeze
+  NON_DIGITAL_PARTS = [ NORMAL_PARTS ].freeze
 
   attr_reader :margin, :pattern, :start
+
   def initialize(margin, pattern, start = nil)
     @margin = margin
     @pattern = pattern
