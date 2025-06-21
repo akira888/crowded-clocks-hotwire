@@ -53,3 +53,26 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libsqlite3-dev
+          bundle install --jobs 4 --retry 3
+      - name: Set up database
+        run: echo 'skip db setup'
+      - name: Run tests
+        run: |
+          bundle exec rspec
+
