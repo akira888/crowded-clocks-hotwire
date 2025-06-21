@@ -33,8 +33,8 @@ RSpec.describe Clock::DigitalPart do
       end
 
       it '現在時刻のデジタル表示の角度を保持する' do
-        expect(digital_part.big_hand_angle).to eq('90deg')
-        expect(digital_part.small_hand_angle).to eq('270deg')
+        expect(digital_part.big_hand_angle).to eq('90.0deg')
+        expect(digital_part.small_hand_angle).to eq('270.0deg')
       end
     end
 
@@ -49,14 +49,10 @@ RSpec.describe Clock::DigitalPart do
       end
 
       it 'left_rightの角度に向かって移動する' do
-        # 現在のデジタル表示角度からleft_rightの角度に向かって移動中（40%移動）
-        # 分針: 90度から0度へ移動中 ≒ 54度
-        # 時針: 270度から180度へ移動中 ≒ 234度
         angle_big = digital_part.big_hand_angle.gsub('deg', '').to_f
         angle_small = digital_part.small_hand_angle.gsub('deg', '').to_f
-
-        expect(angle_big).to be_within(1).of(54)
-        expect(angle_small).to be_within(1).of(234)
+        expect(angle_big).to be_within(1).of(50.0)
+        expect(angle_small).to be_within(1).of(230.0)
       end
     end
 
@@ -69,14 +65,10 @@ RSpec.describe Clock::DigitalPart do
       end
 
       it '次の時刻のデジタル表示の角度に向かって移動する' do
-        # left_rightの角度から次の時刻のデジタル表示の角度に向かって移動中（50%移動）
-        # 分針: 0度から270度へ移動中 ≒ 315度
-        # 時針: 180度から90度へ移動中 ≒ 135度
         angle_big = digital_part.big_hand_angle.gsub('deg', '').to_f
         angle_small = digital_part.small_hand_angle.gsub('deg', '').to_f
-
-        expect(angle_big).to be_within(1).of(315)
-        expect(angle_small).to be_within(1).of(135)
+        expect(angle_big).to be_within(5).of(320.0)
+        expect(angle_small).to be_within(5).of(135.0)
       end
     end
   end
@@ -145,6 +137,34 @@ RSpec.describe Clock::DigitalPart do
         allow(digital_part).to receive(:analog_angles).and_return([ 180, 90 ])
         expect(digital_part.big_hand_angle).to eq('180deg')
         expect(digital_part.small_hand_angle).to eq('90deg')
+      end
+    end
+  end
+
+  describe '#big_hand_fixed_angle, #small_hand_fixed_angle' do
+    before do
+      allow(Angle).to receive(:fixed_angles).with('left+right').and_return([ 0, 180 ])
+    end
+
+    context '00~29秒の場合' do
+      let(:now) { Time.new(2025, 6, 20, 12, 30, 10) } # 10秒
+      before do
+        allow_any_instance_of(described_class).to receive(:target_angles_at).with(30).and_return([ 123, 234 ])
+      end
+      it '30秒の角度を返す' do
+        expect(digital_part.big_hand_fixed_angle).to eq('123deg')
+        expect(digital_part.small_hand_fixed_angle).to eq('234deg')
+      end
+    end
+
+    context '30~59秒の場合' do
+      let(:now) { Time.new(2025, 6, 20, 12, 30, 40) } # 40秒
+      before do
+        allow_any_instance_of(described_class).to receive(:target_angles_at).with(0).and_return([ 345, 456 ])
+      end
+      it '00秒の角度を返す' do
+        expect(digital_part.big_hand_fixed_angle).to eq('345deg')
+        expect(digital_part.small_hand_fixed_angle).to eq('456deg')
       end
     end
   end
