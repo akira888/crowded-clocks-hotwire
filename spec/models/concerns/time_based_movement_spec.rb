@@ -47,7 +47,7 @@ RSpec.describe TimeBasedMovement do
       end
 
       it 'パターン角度で固定される' do
-        expect(test_instance.time_based_angles(current_angles, next_angles, pattern)).to eq([0, 180])
+        expect(test_instance.time_based_angles(current_angles, next_angles, pattern)).to eq([ 0, 180 ])
       end
     end
 
