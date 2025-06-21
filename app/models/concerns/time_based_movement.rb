@@ -1,0 +1,45 @@
+module TimeBasedMovement
+  # 時間帯によって角度を決定するメソッド
+  # 00~05秒: 現在の角度
+  # 05~30秒: left_right方向へ移動
+  # 30~00秒: 次の時刻の角度へ移動
+  def time_based_angles(current_angles, next_angles)
+    seconds = now.sec
+
+    if seconds < 5
+      # 00~05秒: 現在の角度をそのまま返す
+      current_angles
+    elsif seconds < 30
+      # 05~30秒: left_rightの角度へ移動
+      target_angles = Angle.fixed_angles("left_right")
+      calculate_transition_angles(current_angles, target_angles, seconds - 5, 25)
+    else
+      # 30~00秒: 次の時刻の角度へ移動
+      calculate_transition_angles(Angle.fixed_angles("left_right"), next_angles, seconds - 30, 30)
+    end
+  end
+
+  private
+
+  # 現在の角度から目標の角度へ徐々に移動する角度を計算
+  def calculate_transition_angles(start_angles, target_angles, elapsed_time, total_time)
+    return start_angles if start_angles.nil? || target_angles.nil?
+
+    # 各針の角度を計算
+    [
+      calculate_angle_transition(start_angles[0], target_angles[0], elapsed_time, total_time),
+      calculate_angle_transition(start_angles[1], target_angles[1], elapsed_time, total_time)
+    ]
+  end
+
+  # 単一の針について、開始角度から目標角度への遷移を計算
+  def calculate_angle_transition(start_angle, target_angle, elapsed_time, total_time)
+    # 角度の差分を計算（時計回りか反時計回りかの最短経路を決定）
+    diff = (target_angle - start_angle) % 360
+    diff = diff > 180 ? diff - 360 : diff
+
+    # 経過時間に基づいて現在の角度を計算
+    progress = [ elapsed_time.to_f / total_time, 1.0 ].min
+    (start_angle + diff * progress) % 360
+  end
+end
