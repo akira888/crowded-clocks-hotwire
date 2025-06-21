@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = {
     reset: Boolean,
-    intervalMsec: { type: Number, default: 995 },
+    intervalMsec: { type: Number, default: 30000 }, // 30秒ごと
     resetKey: {type: Number, default: null}
   }
   static targets = ['reloadLink', 'debugTool']
