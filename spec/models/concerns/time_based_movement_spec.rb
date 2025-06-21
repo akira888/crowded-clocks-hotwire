@@ -16,15 +16,15 @@ RSpec.describe TimeBasedMovement do
     let(:next_angles) { [ 270, 0 ] }
     let(:pattern) { 'flat' }
 
-    context '00~05秒の場合' do
-      let(:current_time) { Time.new(2025, 6, 20, 12, 30, 3) }
+    context '00~03秒の場合' do
+      let(:current_time) { Time.new(2025, 6, 20, 12, 30, 2) }
 
       it '現在の角度をそのまま返す' do
         expect(test_instance.time_based_angles(current_angles, next_angles, pattern)).to eq(current_angles)
       end
     end
 
-    context '05~30秒の場合' do
+    context '03~30秒の場合' do
       let(:current_time) { Time.new(2025, 6, 20, 12, 30, 15) }
 
       before do
@@ -32,14 +32,26 @@ RSpec.describe TimeBasedMovement do
       end
 
       it 'left_rightの角度に向かって移動する' do
-        # 15秒目 = 5秒経過から10秒経過 (25秒中) = 40%移動
+        # 15秒目 = 3秒経過から12秒経過 (27秒中) = 約44.4%移動
         result = test_instance.time_based_angles(current_angles, next_angles, pattern)
-        expect(result[0]).to be_within(0.1).of(54)  # 90度から0度へ40%移動
+        expect(result[0]).to be_within(0.1).of(50)  # 90度から0度へ44.4%移動
         expect(result[1]).to be_within(0.1).of(180) # 変化なし
       end
     end
 
-    context '30~00秒の場合' do
+    context '30~33秒の場合' do
+      let(:current_time) { Time.new(2025, 6, 20, 12, 30, 31) }
+
+      before do
+        allow(Angle).to receive(:fixed_angles).with('left+right').and_return([ 0, 180 ])
+      end
+
+      it 'パターン角度で固定される' do
+        expect(test_instance.time_based_angles(current_angles, next_angles, pattern)).to eq([ 0, 180 ])
+      end
+    end
+
+    context '33~00秒の場合' do
       let(:current_time) { Time.new(2025, 6, 20, 12, 30, 45) }
 
       before do
@@ -47,10 +59,12 @@ RSpec.describe TimeBasedMovement do
       end
 
       it '次の時刻の角度に向かって移動する' do
-        # 45秒目 = 30秒経過から15秒経過 (30秒中) = 50%移動
+        # 45秒目 = 33秒経過から12秒経過 (27秒中) = 約44.4%移動
         result = test_instance.time_based_angles(current_angles, next_angles, pattern)
-        expect(result[0]).to be_within(0.1).of(315) # 0度から270度へ50%移動
-        expect(result[1]).to be_within(0.1).of(270) # 180度から0度へ50%移動
+        # 270度から0度へ44.4%移動 = 270 + (0-270) * 12/27 ≒ 120度減少 → 320度
+        expect(result[0]).to be_within(0.1).of(320.0)
+        # 180度から0度へ44.4%移動 = 180 + (0-180) * 12/27 ≒ 100度
+        expect(result[1]).to be_within(0.1).of(260.0)
       end
     end
   end
