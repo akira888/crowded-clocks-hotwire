@@ -4,7 +4,7 @@ module Clock
     include TimeBasedMovement
     attr_reader :group
 
-    def initialize(now, position, pattern, start = nil, group = nil)
+    def initialize(now, position, pattern, group, start = nil)
       super(now, position, pattern, start)
       @group = group
     end

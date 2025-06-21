@@ -17,7 +17,7 @@ class ClocksFactory
       rows.each_with_index.map do |char, col|
         if digital_parts?(char)
           group = digital_part_group(row, col)
-          Clock::DigitalPart.new(now, char, pattern, start, group)
+          Clock::DigitalPart.new(now, char, pattern, group, start)
         else
           Clock::Basic.new(now, char, pattern, start)
         end

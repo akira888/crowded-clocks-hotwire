@@ -7,7 +7,7 @@ RSpec.describe Clock::DigitalPart do
   let(:start) { Time.new(2025, 6, 20, 12, 0) } # オプションのスタート時間
   let(:group) { 0 } # 1番目のグループ (時間の「1」の位置)
 
-  subject(:digital_part) { described_class.new(now, position, pattern, start, group) }
+  subject(:digital_part) { described_class.new(now, position, pattern, group, start) }
 
   describe '#initialize' do
     it 'ClockObjectの初期化と追加のグループ属性を設定する' do
