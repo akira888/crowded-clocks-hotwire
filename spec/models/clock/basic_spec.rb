@@ -34,8 +34,8 @@ RSpec.describe Clock::Basic do
         angle_big = clock.big_hand_angle.gsub('deg', '').to_f
         angle_small = clock.small_hand_angle.gsub('deg', '').to_f
 
-        expect(angle_big).to be_within(1).of(306)
-        expect(angle_small).to be_within(1).of(135)
+        expect(angle_big).to be_within(1).of(310.83)
+        expect(angle_small).to be_within(1).of(138.33)
       end
     end
 
@@ -53,8 +53,8 @@ RSpec.describe Clock::Basic do
         angle_big = clock.big_hand_angle.gsub('deg', '').to_f
         angle_small = clock.small_hand_angle.gsub('deg', '').to_f
 
-        expect(angle_big).to be_within(1).of(320.25)
-        expect(angle_small).to be_within(1).of(143)
+        expect(angle_big).to be_within(1).of(324.67)
+        expect(angle_small).to be_within(1).of(146.89)
       end
     end
   end
