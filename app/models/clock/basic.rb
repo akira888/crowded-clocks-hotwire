@@ -24,7 +24,7 @@ module Clock
         next_angles = analog_angles
 
         # 秒数に応じた針の動きを計算
-        time_based_angles(current_angles, next_angles)
+        time_based_angles(current_angles, next_angles, pattern)
       end
     end
 

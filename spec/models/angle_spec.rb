@@ -20,11 +20,11 @@ RSpec.describe Angle do
       end
 
       it '複合キーワード "up_right" は [90, 180] を返す' do
-        expect(Angle.fixed_angles('up_right')).to eq([ 90, 180 ])
+        expect(Angle.fixed_angles('up+right')).to eq([ 90, 180 ])
       end
 
       it '複合キーワード "left_down" は [0, 270] を返す' do
-        expect(Angle.fixed_angles('left_down')).to eq([ 0, 270 ])
+        expect(Angle.fixed_angles('left+down')).to eq([ 0, 270 ])
       end
     end
 

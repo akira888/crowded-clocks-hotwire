@@ -1,23 +1,22 @@
 class ClocksFactory
-  # プレースホルダー文字の定数
   NORMAL_PARTS = "x".freeze
+  NON_DIGITAL_PARTS = [ NORMAL_PARTS ].freeze
 
-  NON_DIGITAL_PARTS = [ NORMAL_PARTS, "4", "a" ].freeze
+  attr_reader :margin, :pattern, :now, :start
 
-  attr_reader :margin, :pattern, :start
-  def initialize(margin, pattern, start = nil)
+  def initialize(margin, pattern, now, start = nil)
     @margin = margin
     @pattern = pattern
     @start = start
+    @now = now
   end
 
   def create
-    now = Time.now
     matrix.each_with_index.flat_map do |rows, row|
       rows.each_with_index.map do |char, col|
         if digital_parts?(char)
           group = digital_part_group(row, col)
-          Clock::DigitalPart.new(now, char, pattern, start, group)
+          Clock::DigitalPart.new(now, char, pattern, group, start)
         else
           Clock::Basic.new(now, char, pattern, start)
         end

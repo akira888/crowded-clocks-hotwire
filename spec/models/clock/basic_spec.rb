@@ -10,7 +10,7 @@ RSpec.describe Clock::Basic do
 
   describe '時間帯に応じた針の動き' do
     before do
-      allow(Angle).to receive(:fixed_angles).with('left_right').and_return([ 0, 180 ])
+      allow(Angle).to receive(:fixed_angles).with('left+right').and_return([ 0, 180 ])
     end
 
     context '00~05秒の場合' do

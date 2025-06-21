@@ -1,25 +1,42 @@
 module TimeBasedMovement
   # 時間帯によって角度を決定するメソッド
   # 00~05秒: 現在の角度
-  # 05~30秒: left_right方向へ移動
+  # 05~30秒: パターンに基づく方向へ移動
   # 30~00秒: 次の時刻の角度へ移動
-  def time_based_angles(current_angles, next_angles)
+  def time_based_angles(current_angles, next_angles, pattern_name)
     seconds = now.sec
 
     if seconds < 5
       # 00~05秒: 現在の角度をそのまま返す
       current_angles
     elsif seconds < 30
-      # 05~30秒: left_rightの角度へ移動
-      target_angles = Angle.fixed_angles("left_right")
+      # 05~30秒: パターンに基づく角度へ移動
+      target_angles = pattern_angles(pattern_name)
       calculate_transition_angles(current_angles, target_angles, seconds - 5, 25)
     else
       # 30~00秒: 次の時刻の角度へ移動
-      calculate_transition_angles(Angle.fixed_angles("left_right"), next_angles, seconds - 30, 30)
+      calculate_transition_angles(pattern_angles(pattern_name), next_angles, seconds - 30, 30)
     end
   end
 
   private
+
+  # パターンに基づいて目標角度を決定するメソッド
+  def pattern_angles(pattern_name)
+    case pattern_name
+    when "horizontal"
+      Angle.fixed_angles("left+right")
+    when "vertical"
+      Angle.fixed_angles("up+down")
+    when "diagonal_right"
+      Angle.fixed_angles("up_right+down_left")
+    when "diagonal_left"
+      Angle.fixed_angles("up_left+down_right")
+    else
+      # デフォルト（"flat"など）はleft_right
+      Angle.fixed_angles("left+right")
+    end
+  end
 
   # 現在の角度から目標の角度へ徐々に移動する角度を計算
   def calculate_transition_angles(start_angles, target_angles, elapsed_time, total_time)

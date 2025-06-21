@@ -4,7 +4,7 @@ module Clock
     include TimeBasedMovement
     attr_reader :group
 
-    def initialize(now, position, pattern, start = nil, group = nil)
+    def initialize(now, position, pattern, group, start = nil)
       super(now, position, pattern, start)
       @group = group
     end
@@ -30,7 +30,7 @@ module Clock
         next_angles = next_digital_angles
 
         # 秒数に応じた針の動きを計算
-        time_based_angles(current_angles, next_angles)
+        time_based_angles(current_angles, next_angles, pattern)
       end
     end
 

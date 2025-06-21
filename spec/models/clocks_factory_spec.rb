@@ -52,8 +52,6 @@ RSpec.describe ClocksFactory do
 
     it 'NON_DIGITAL_PARTSに含まれる文字に対してfalseを返す' do
       expect(factory.send(:digital_parts?, ClocksFactory::NORMAL_PARTS)).to be false
-      expect(factory.send(:digital_parts?, '4')).to be false
-      expect(factory.send(:digital_parts?, 'a')).to be false
     end
   end
 
