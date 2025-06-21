@@ -24,6 +24,8 @@ module TimeBasedMovement
   # パターンに基づいて目標角度を決定するメソッド
   def pattern_angles(pattern_name)
     case pattern_name
+    when "horizontal"
+      Angle.fixed_angles("left+right")
     when "vertical"
       Angle.fixed_angles("up+down")
     when "diagonal_right"

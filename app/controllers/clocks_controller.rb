@@ -1,4 +1,6 @@
 class ClocksController < ApplicationController
+  include PatternAssignable
+
   def index
     margin = 2
     now = Time.now
@@ -11,9 +13,5 @@ class ClocksController < ApplicationController
 
   def start
     nil
-  end
-
-  def pattern
-    params[:pattern] || "flat"
   end
 end
