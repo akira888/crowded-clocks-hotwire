@@ -13,6 +13,6 @@ class ClocksController < ApplicationController
   end
 
   def pattern
-    "flat"
+    params[:pattern] || "flat"
   end
 end
