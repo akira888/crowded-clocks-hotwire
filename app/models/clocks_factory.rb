@@ -2,16 +2,16 @@ class ClocksFactory
   NORMAL_PARTS = "x".freeze
   NON_DIGITAL_PARTS = [ NORMAL_PARTS ].freeze
 
-  attr_reader :margin, :pattern, :start
+  attr_reader :margin, :pattern, :now, :start
 
-  def initialize(margin, pattern, start = nil)
+  def initialize(margin, pattern, now, start = nil)
     @margin = margin
     @pattern = pattern
     @start = start
+    @now = now
   end
 
   def create
-    now = Time.now
     matrix.each_with_index.flat_map do |rows, row|
       rows.each_with_index.map do |char, col|
         if digital_parts?(char)
