@@ -13,5 +13,6 @@
   <% end %>
   <div data-controller="interval" id="interval" class="col-start-1 row-start-1">
     <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks"></a>
+    <label data-interval-target="debugTool" class="hidden">停止<input type="checkbox" data-action="click->interval#toggleStartStop"></label>
   </div>
 </div>

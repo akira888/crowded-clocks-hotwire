@@ -6,7 +6,14 @@ export default class extends Controller {
     intervalMsec: { type: Number, default: 995 },
     resetKey: {type: Number, default: null}
   }
-  static targets = ['reloadLink']
+  static targets = ['reloadLink', 'debugTool']
+
+  connect() {
+    const url = new URL(location.href)
+    if (url.searchParams.get('debug')) {
+      this.debugToolTarget.className = 'inline'
+    }
+  }
 
   // 他のタイマーが発動していたら何もしない
   startInterval() {
@@ -18,5 +25,14 @@ export default class extends Controller {
     if (!!this.resetKeyValue) { clearInterval(this.resetKeyValue)}
     this.resetKeyValue = null;
     setTimeout(() => this.reloadLinkTarget.click(), adjustMilliseconds)
+  }
+
+  toggleStartStop() {
+    if (this.resetKeyValue) {
+      clearInterval(this.resetKeyValue)
+      this.resetKeyValue = null;
+    } else {
+      this.resetKeyValue = setInterval(() => this.reloadLinkTarget.click(), this.intervalMsecValue)
+    }
   }
 }
