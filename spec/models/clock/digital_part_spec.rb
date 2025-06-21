@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Clock::DigitalPart do
   let(:now) { Time.new(2025, 6, 20, 12, 30, 3) } # 00~05秒の範囲に修正
   let(:position) { '0' } # 16進数の0番目の位置
-  let(:pattern) { 'pattern' }
+  let(:pattern) { 'flat' }
   let(:start) { Time.new(2025, 6, 20, 12, 0) } # オプションのスタート時間
   let(:group) { 0 } # 1番目のグループ (時間の「1」の位置)
 
@@ -21,7 +21,7 @@ RSpec.describe Clock::DigitalPart do
 
   describe '時間帯に応じた針の動き' do
     before do
-      allow(Angle).to receive(:fixed_angles).with('left_right').and_return([ 0, 180 ])
+      allow(Angle).to receive(:fixed_angles).with('left+right').and_return([ 0, 180 ])
     end
 
     context '00~05秒の場合' do

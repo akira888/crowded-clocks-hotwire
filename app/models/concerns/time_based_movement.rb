@@ -10,8 +10,6 @@ module TimeBasedMovement
       # 00~05秒: 現在の角度をそのまま返す
       current_angles
     elsif seconds < 30
-      # 05~30秒: left_rightの角度へ移動
-      target_angles = Angle.fixed_angles("left_right")
       # 05~30秒: パターンに基づく角度へ移動
       target_angles = pattern_angles(pattern_name)
       calculate_transition_angles(current_angles, target_angles, seconds - 5, 25)
