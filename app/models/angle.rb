@@ -23,4 +23,3 @@ class Angle
     end
   end
 end
-
