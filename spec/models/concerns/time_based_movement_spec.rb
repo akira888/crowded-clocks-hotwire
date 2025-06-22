@@ -20,7 +20,7 @@ RSpec.describe TimeBasedMovement do
       let(:current_time) { Time.new(2025, 6, 20, 12, 30, 2) }
 
       it '現在の角度をそのまま返す' do
-        expect(test_instance.time_based_angles(current_angles, next_angles, pattern)).to eq(current_angles)
+        expect(test_instance.time_based_angles(current_time.sec, current_angles, next_angles, pattern)).to eq(current_angles)
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe TimeBasedMovement do
 
       it 'left_rightの角度に向かって移動する' do
         # 15秒目 = 3秒経過から12秒経過 (27秒中) = 約44.4%移動
-        result = test_instance.time_based_angles(current_angles, next_angles, pattern)
+        result = test_instance.time_based_angles(current_time.sec, current_angles, next_angles, pattern)
         expect(result[0]).to be_within(0.1).of(50)  # 90度から0度へ44.4%移動
         expect(result[1]).to be_within(0.1).of(180) # 変化なし
       end
@@ -47,7 +47,7 @@ RSpec.describe TimeBasedMovement do
       end
 
       it 'パターン角度で固定される' do
-        expect(test_instance.time_based_angles(current_angles, next_angles, pattern)).to eq([ 0, 180 ])
+        expect(test_instance.time_based_angles(current_time.sec, current_angles, next_angles, pattern)).to eq([ 0, 180 ])
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe TimeBasedMovement do
 
       it '次の時刻の角度に向かって移動する' do
         # 45秒目 = 33秒経過から12秒経過 (27秒中) = 約44.4%移動
-        result = test_instance.time_based_angles(current_angles, next_angles, pattern)
+        result = test_instance.time_based_angles(current_time.sec, current_angles, next_angles, pattern)
         # 270度から0度へ44.4%移動 = 270 + (0-270) * 12/27 ≒ 120度減少 → 320度
         expect(result[0]).to be_within(0.1).of(320.0)
         # 180度から0度へ44.4%移動 = 180 + (0-180) * 12/27 ≒ 100度

@@ -29,7 +29,7 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         # 現在時刻のデジタル表示の角度をモック
-        allow(digital_part).to receive(:current_digital_angles).and_return([ 90, 270 ])
+        allow(digital_part).to receive(:current_angles).and_return([ 90, 270 ])
       end
 
       it '現在時刻のデジタル表示の角度を保持する' do
@@ -43,9 +43,9 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         # 現在時刻のデジタル表示の角度をモック
-        allow(digital_part).to receive(:current_digital_angles).and_return([ 90, 270 ])
+        allow(digital_part).to receive(:current_angles).and_return([ 90, 270 ])
         # 次の時刻のデジタル表示の角度をモック（使わないが念のため）
-        allow(digital_part).to receive(:next_digital_angles).and_return([ 270, 90 ])
+        allow(digital_part).to receive(:next_angles).and_return([ 270, 90 ])
       end
 
       it 'left_rightの角度に向かって移動する' do
@@ -61,7 +61,7 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         # 次の時刻のデジタル表示の角度をモック
-        allow(digital_part).to receive(:next_digital_angles).and_return([ 270, 90 ])
+        allow(digital_part).to receive(:next_angles).and_return([ 270, 90 ])
       end
 
       it '次の時刻のデジタル表示の角度に向かって移動する' do
@@ -80,7 +80,7 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         # 00~05秒の範囲に固定してテストするため、モックを設定
-        allow(digital_part).to receive(:target_angles).and_return([ 90, 270 ])
+        allow(digital_part).to receive(:hand_angles).and_return([ 90, 270 ])
 
         allow(DigitalPartsMap).to receive(:by_number).with(1).and_return(
           [ :not_parts, :not_parts, :down_down, :not_parts, :not_parts, :down_up,
@@ -101,7 +101,7 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         # 00~05秒の範囲に固定してテストするため、モックを設定
-        allow(digital_part).to receive(:target_angles).and_return([ 180, 0 ])
+        allow(digital_part).to receive(:hand_angles).and_return([ 180, 0 ])
 
         allow(DigitalPartsMap).to receive(:by_number).with(2).and_return(
           [ :right_right, :left_right, :down_left, :not_parts, :not_parts, :down_up,
@@ -122,11 +122,12 @@ RSpec.describe Clock::DigitalPart do
 
       before do
         # 00~05秒の範囲に固定してテストするため、モックを設定
-        allow(digital_part).to receive(:target_angles).and_return([ 180, 90 ])
+        allow(digital_part).to receive(:hand_angles).and_return([ 180, 90 ])
 
         # 追加のモックを設定（current_digital_number）
-        allow(digital_part).to receive(:current_digital_number).and_return(1)
-        allow(digital_part).to receive(:digital_number).and_return(1)
+        next_time = now.advance(minutes: 1)
+        allow(digital_part).to receive(:digital_number).with(now).and_return(1)
+        allow(digital_part).to receive(:digital_number).with(next_time).and_return(1)
         allow(DigitalPartsMap).to receive(:by_number).with(1).and_return(
           Array.new(15) { |i| i == 4 ? :not_parts : :down_up }
         )
@@ -134,14 +135,14 @@ RSpec.describe Clock::DigitalPart do
       end
 
       it 'アナログ時計の角度を返す' do
-        allow(digital_part).to receive(:analog_angles).and_return([ 180, 90 ])
+        allow(digital_part).to receive(:next_analog_angles).and_return([ 180, 90 ])
         expect(digital_part.big_hand_angle).to eq('180deg')
         expect(digital_part.small_hand_angle).to eq('90deg')
       end
     end
   end
 
-  describe '#big_hand_fixed_angle, #small_hand_fixed_angle' do
+  describe '#big_hand_destination_angle, #small_hand_destination_angle' do
     before do
       allow(Angle).to receive(:fixed_angles).with('left+right').and_return([ 0, 180 ])
     end
@@ -149,22 +150,22 @@ RSpec.describe Clock::DigitalPart do
     context '00~29秒の場合' do
       let(:now) { Time.new(2025, 6, 20, 12, 30, 10) } # 10秒
       before do
-        allow_any_instance_of(described_class).to receive(:target_angles_at).with(30).and_return([ 123, 234 ])
+        allow_any_instance_of(described_class).to receive(:destination_angles).and_return([ 123, 234 ])
       end
       it '30秒の角度を返す' do
-        expect(digital_part.big_hand_fixed_angle).to eq('123deg')
-        expect(digital_part.small_hand_fixed_angle).to eq('234deg')
+        expect(digital_part.big_hand_destination_angle).to eq('123deg')
+        expect(digital_part.small_hand_destination_angle).to eq('234deg')
       end
     end
 
     context '30~59秒の場合' do
       let(:now) { Time.new(2025, 6, 20, 12, 30, 40) } # 40秒
       before do
-        allow_any_instance_of(described_class).to receive(:target_angles_at).with(0).and_return([ 345, 456 ])
+        allow_any_instance_of(described_class).to receive(:destination_angles).and_return([ 345, 456 ])
       end
       it '00秒の角度を返す' do
-        expect(digital_part.big_hand_fixed_angle).to eq('345deg')
-        expect(digital_part.small_hand_fixed_angle).to eq('456deg')
+        expect(digital_part.big_hand_destination_angle).to eq('345deg')
+        expect(digital_part.small_hand_destination_angle).to eq('456deg')
       end
     end
   end

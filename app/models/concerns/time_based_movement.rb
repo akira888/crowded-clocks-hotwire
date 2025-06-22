@@ -4,22 +4,24 @@ module TimeBasedMovement
   # 03~30秒: パターンに基づく方向へ移動
   # 30~33秒: パターンに基づく角度で固定
   # 33~00秒: 次の時刻の角度へ移動
-  def time_based_angles(current_angles, next_angles, pattern_name)
-    seconds = now.sec
-
+  def time_based_angles(seconds, current_angles, next_angles, pattern_name)
     if seconds < 3
-      # 00~03秒: 現在の角度をそのまま返す
       current_angles
     elsif seconds < 30
-      # 03~30秒: パターンに基づく角度へ移動
       target_angles = pattern_angles(pattern_name)
       calculate_transition_angles(current_angles, target_angles, seconds - 3, 27)
     elsif seconds < 33
-      # 30~33秒: パターンに基づく角度で固定
       pattern_angles(pattern_name)
     else
-      # 33~00秒: 次の時刻の角度へ移動
       calculate_transition_angles(pattern_angles(pattern_name), next_angles, seconds - 33, 27)
+    end
+  end
+
+  def time_based_target_angles(seconds, next_angles, pattern_name)
+    if seconds < 30
+      pattern_angles(pattern_name)
+    else
+      next_angles
     end
   end
 
