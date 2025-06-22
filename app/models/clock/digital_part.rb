@@ -42,8 +42,7 @@ module Clock
 
     def destination_angles
       @destination_angles ||= begin
-        sec = now.sec < 30 ? 30 : 0
-        time_based_target_angles(sec, next_angles, pattern)
+        time_based_target_angles(now.sec, next_angles, pattern)
       end
     end
 
