@@ -12,27 +12,27 @@ export default class extends Controller {
 
   // Turbo Frames用
   connect() {
-    if (!this.hasIntervalOutlet) return;
-    this.callInterval()
+    if (this.hasIntervalOutlet) {
+      this.callInterval()
+    }
+
     this.startHandAnimationTimer()
   }
 
   // 画面初期表示用
   intervalOutletConnected() {
     this.callInterval()
-    this.startHandAnimationTimer()
   }
 
   startHandAnimationTimer() {
-    if (this.animateStarterValue) {
-      clearInterval(this.animateStarterValue)
-      this.animateStarterValue = null
-    }
+    if (this.animateStarterValue) this.stopHandAnimationTimer()
+
     this.animateStarterValue = setInterval(() => this.animateHands(), 1000)
   }
 
-  disconnect() {
-    if (this.animateStarterValue) clearInterval(this.animateStarterValue)
+  stopHandAnimationTimer() {
+    clearInterval(this.animateStarterValue)
+    this.animateStarterValue = null
   }
 
   callInterval() {
@@ -47,10 +47,10 @@ export default class extends Controller {
     const now = new Date()
     const sec = now.getSeconds()
     // 03秒以降または33秒以降ならアニメーション
-    console.log(sec)
     if ((sec >= 3 && sec < 30) || (sec >= 33)) {
-      clearInterval(this.animateStarterValue)
-      this.animateStarterValue = null
+      // 実行開始したらトリガーを止める
+      this.stopHandAnimationTimer()
+
       this.handTargets.forEach(hand => {
         const to = hand.dataset.fixedAngle // ex. 180deg
         if (!to) return
@@ -70,9 +70,11 @@ export default class extends Controller {
           duration: remain * 1000,
           fill: "forwards"
         })
-        // hand.style.transitionDuration  = remain * 1000
-        // hand.style.rotate = to
       })
     }
+  }
+
+  disconnect() {
+    if (this.animateStarterValue) this.stopHandAnimationTimer()
   }
 }
