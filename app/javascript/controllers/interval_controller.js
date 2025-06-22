@@ -3,16 +3,13 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = {
     reset: Boolean,
-    intervalMsec: { type: Number, default: 995 },
+    intervalMsec: Number,
     resetKey: {type: Number, default: null}
   }
   static targets = ['reloadLink', 'debugTool']
 
   connect() {
-    const url = new URL(location.href)
-    if (url.searchParams.get('debug')) {
-      this.debugToolTarget.className = 'inline'
-    }
+    this.debugMode()
   }
 
   // 他のタイマーが発動していたら何もしない
@@ -27,12 +24,10 @@ export default class extends Controller {
     setTimeout(() => this.reloadLinkTarget.click(), adjustMilliseconds)
   }
 
-  toggleStartStop() {
-    if (this.resetKeyValue) {
-      clearInterval(this.resetKeyValue)
-      this.resetKeyValue = null;
-    } else {
-      this.resetKeyValue = setInterval(() => this.reloadLinkTarget.click(), this.intervalMsecValue)
+  debugMode() {
+    const url = new URL(location.href)
+    if (url.searchParams.get('debug')) {
+      this.debugToolTargets.forEach((el) => {el.className = 'inline'})
     }
   }
 }

@@ -1,14 +1,15 @@
 module ClocksHelper
   def interval
-    990
+    30000
   end
 
-  def adjust_interval
-    millisecond - 1000.abs
+  def adjust_interval(now)
+    now_min = now.sec > 30 ? now.sec - 30 : now.sec # 1..29
+    (30 - now_min) * 1000 - millisecond
   end
 
-  def reset_interval?
-    (100..900).cover? millisecond
+  def reset_interval?(now)
+    !(now.sec == 0 || now.sec == 30)
   end
 
   private

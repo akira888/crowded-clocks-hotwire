@@ -20,10 +20,18 @@ class ClockObject
     raise ::NotImplementedError
   end
 
+  def big_hand_destination_angle
+    raise ::NotImplementedError
+  end
+
+  def small_hand_destination_angle
+    raise ::NotImplementedError
+  end
+
   private
 
   def next_time
-    # １分進める（つぎのポジションを返す）
+    # １分進める（針の移動先のベースとなる）
     @next_time ||= now.advance(minutes: 1)
   end
 end

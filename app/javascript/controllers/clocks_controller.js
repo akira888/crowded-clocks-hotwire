@@ -4,26 +4,35 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = {
     reset: Boolean,
-    adjustInterval: Number
+    adjustInterval: Number,
+    animateStarter: {type: Number, default: null}
   }
   static outlets = ['interval']
   static targets = ["hand"]
 
   // Turbo Frames用
   connect() {
-    if (!this.hasIntervalOutlet) return;
-    this.callInterval()
-    // 例: すべての針の固定角度を取得する
-    this.handTargets.forEach(hand => {
-      const fixed = hand.dataset.fixedAngle
-      // 必要に応じてここで操作
-      // console.log(fixed)
-    })
+    if (this.hasIntervalOutlet) {
+      this.callInterval()
+    }
+
+    this.startHandAnimationTimer()
   }
 
   // 画面初期表示用
   intervalOutletConnected() {
     this.callInterval()
+  }
+
+  startHandAnimationTimer() {
+    if (this.animateStarterValue) this.stopHandAnimationTimer()
+
+    this.animateStarterValue = setInterval(() => this.animateHands(), 1000)
+  }
+
+  stopHandAnimationTimer() {
+    clearInterval(this.animateStarterValue)
+    this.animateStarterValue = null
   }
 
   callInterval() {
@@ -32,5 +41,40 @@ export default class extends Controller {
     } else {
       this.intervalOutlet.startInterval()
     }
+  }
+
+  animateHands() {
+    const now = new Date()
+    const sec = now.getSeconds()
+    // 03秒以降または33秒以降ならアニメーション
+    if ((sec >= 3 && sec < 30) || (sec >= 33)) {
+      // 実行開始したらトリガーを止める
+      this.stopHandAnimationTimer()
+
+      this.handTargets.forEach(hand => {
+        const to = hand.dataset.destinationAngle // ex. 180deg
+        if (!to) return
+        // 現在の角度
+        const from = hand.style.rotate || "0deg"
+        // 残り秒数
+        let remain = 0
+        if (sec >= 3 && sec < 30) {
+          remain = 30 - sec
+        } else if (sec >= 33) {
+          remain = 60 - sec
+        }
+        hand.animate([
+          { rotate: from },
+          { rotate: to }
+        ], {
+          duration: remain * 1000,
+          fill: "forwards"
+        })
+      })
+    }
+  }
+
+  disconnect() {
+    if (this.animateStarterValue) this.stopHandAnimationTimer()
   }
 }
