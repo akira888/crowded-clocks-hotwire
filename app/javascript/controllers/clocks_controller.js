@@ -52,7 +52,7 @@ export default class extends Controller {
       this.stopHandAnimationTimer()
 
       this.handTargets.forEach(hand => {
-        const to = hand.dataset.fixedAngle // ex. 180deg
+        const to = hand.dataset.destinationAngle // ex. 180deg
         if (!to) return
         // 現在の角度
         const from = hand.style.rotate || "0deg"
