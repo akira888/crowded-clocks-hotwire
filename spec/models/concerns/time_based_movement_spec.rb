@@ -105,4 +105,43 @@ RSpec.describe TimeBasedMovement do
       expect(result).to be_within(0.1).of(355) # 350度から10度へ25%移動
     end
   end
+
+  describe '#time_based_target_angles' do
+    let(:test_instance) { TestClass.new(current_time) }
+    let(:next_angles) { [ 270, 0 ] }
+    let(:pattern) { 'flat' }
+
+    context '30秒未満の場合' do
+      let(:current_time) { Time.new(2025, 6, 20, 12, 30, 15) }
+
+      before do
+        allow(Angle).to receive(:fixed_angles).with('left+right').and_return([ 0, 180 ])
+      end
+
+      it 'パターンに基づく角度を返す' do
+        expect(test_instance.time_based_target_angles(current_time.sec, next_angles, pattern)).to eq([ 0, 180 ])
+      end
+    end
+
+    context '30秒以上の場合' do
+      let(:current_time) { Time.new(2025, 6, 20, 12, 30, 45) }
+
+      it '次の時刻の角度を返す' do
+        expect(test_instance.time_based_target_angles(current_time.sec, next_angles, pattern)).to eq(next_angles)
+      end
+    end
+
+    context '異なるパターンが指定された場合' do
+      let(:current_time) { Time.new(2025, 6, 20, 12, 30, 15) }
+      let(:vertical_pattern) { 'vertical' }
+
+      before do
+        allow(Angle).to receive(:fixed_angles).with('up+down').and_return([ 90, 270 ])
+      end
+
+      it '指定されたパターンに基づく角度を返す' do
+        expect(test_instance.time_based_target_angles(current_time.sec, next_angles, vertical_pattern)).to eq([ 90, 270 ])
+      end
+    end
+  end
 end
