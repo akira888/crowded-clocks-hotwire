@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = {
     reset: Boolean,
-    intervalMsec: { type: Number, default: 30000 }, // 30秒ごと
+    intervalMsec: Number,
     resetKey: {type: Number, default: null}
   }
   static targets = ['reloadLink', 'debugTool']
@@ -11,7 +11,7 @@ export default class extends Controller {
   connect() {
     const url = new URL(location.href)
     if (url.searchParams.get('debug')) {
-      this.debugToolTarget.className = 'inline'
+      this.debugToolTargets.forEach((el) => {el.className = 'inline'})
     }
   }
 
