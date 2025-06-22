@@ -4,7 +4,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = {
     reset: Boolean,
-    adjustInterval: Number
+    adjustInterval: Number,
+    animateStarter: {type: Number, default: null}
   }
   static outlets = ['interval']
   static targets = ["hand"]
@@ -23,12 +24,15 @@ export default class extends Controller {
   }
 
   startHandAnimationTimer() {
-    if (this._handAnimationTimer) clearInterval(this._handAnimationTimer)
-    this._handAnimationTimer = setInterval(() => this.animateHands(), 1000)
+    if (this.animateStarterValue) {
+      clearInterval(this.animateStarterValue)
+      this.animateStarterValue = null
+    }
+    this.animateStarterValue = setInterval(() => this.animateHands(), 1000)
   }
 
   disconnect() {
-    if (this._handAnimationTimer) clearInterval(this._handAnimationTimer)
+    if (this.animateStarterValue) clearInterval(this.animateStarterValue)
   }
 
   callInterval() {
@@ -43,9 +47,12 @@ export default class extends Controller {
     const now = new Date()
     const sec = now.getSeconds()
     // 03秒以降または33秒以降ならアニメーション
+    console.log(sec)
     if ((sec >= 3 && sec < 30) || (sec >= 33)) {
+      clearInterval(this.animateStarterValue)
+      this.animateStarterValue = null
       this.handTargets.forEach(hand => {
-        const to = hand.dataset.fixedAngle // すでにdeg付き
+        const to = hand.dataset.fixedAngle // ex. 180deg
         if (!to) return
         // 現在の角度
         const from = hand.style.rotate || "0deg"
@@ -56,15 +63,15 @@ export default class extends Controller {
         } else if (sec >= 33) {
           remain = 60 - sec
         }
-        const duration = remain * 1000
         hand.animate([
           { rotate: from },
           { rotate: to }
         ], {
-          duration: duration,
+          duration: remain * 1000,
           fill: "forwards"
         })
-        hand.style.rotate = to
+        // hand.style.transitionDuration  = remain * 1000
+        // hand.style.rotate = to
       })
     }
   }
