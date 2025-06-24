@@ -8,10 +8,6 @@ export default class extends Controller {
   }
   static targets = ['reloadLink', 'debugTool']
 
-  connect() {
-    this.debugMode()
-  }
-
   // 他のタイマーが発動していたら何もしない
   startInterval() {
     if (!!this.resetKeyValue) return;
@@ -22,12 +18,5 @@ export default class extends Controller {
     if (!!this.resetKeyValue) { clearInterval(this.resetKeyValue)}
     this.resetKeyValue = null;
     setTimeout(() => this.reloadLinkTarget.click(), adjustMilliseconds)
-  }
-
-  debugMode() {
-    const url = new URL(location.href)
-    if (url.searchParams.get('debug')) {
-      this.debugToolTargets.forEach((el) => {el.className = 'inline'})
-    }
   }
 }

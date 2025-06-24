@@ -18,16 +18,5 @@
     data-interval-interval-msec-value="<%= interval %>"
   >
     <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks"></a>
-    <div data-interval-target="debugTool" class="hidden">
-      <ul>
-        <li>
-          取得時間: <span><%= @now %></span>
-        </li>
-        <li>リセットの必要：<%= reset_interval?(@now) %></li>
-        <li>
-          初回再取得タイミング: <span><%= adjust_interval(@now) %></span>
-        </li>
-      </ul>
-    </div>
   </div>
 </div>
