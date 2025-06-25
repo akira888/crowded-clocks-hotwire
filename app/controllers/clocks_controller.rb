@@ -4,7 +4,7 @@ class ClocksController < ApplicationController
   def index
     margin = 3
     @now = Time.now
-    factory = ClocksFactory.new(margin, pattern(@now), @now, start)
+    factory = ClocksFactory.new(margin, pattern(@now), @now)
     @clocks = factory.create
     @cols = factory.matrix_width
   end
