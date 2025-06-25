@@ -4,16 +4,14 @@ RSpec.describe ClockObject do
   let(:now) { Time.new(2025, 6, 20, 12, 30) } # 2025年6月20日 12:30
   let(:position) { 'x' }
   let(:pattern) { 'pattern' }
-  let(:start) { Time.new(2025, 6, 20, 12, 0) } # オプションのスタート時間
 
-  subject(:clock_object) { described_class.new(now, position, pattern, start) }
+  subject(:clock_object) { described_class.new(now, position, pattern) }
 
   describe '#initialize' do
     it 'インスタンス変数を正しく設定する' do
       expect(clock_object.now).to eq(now)
       expect(clock_object.position).to eq(position)
       expect(clock_object.pattern).to eq(pattern)
-      expect(clock_object.start).to eq(start)
     end
   end
 
