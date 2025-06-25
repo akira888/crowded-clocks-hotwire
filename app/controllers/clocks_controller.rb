@@ -2,7 +2,7 @@ class ClocksController < ApplicationController
   include PatternAssignable
 
   def index
-    margin = 3
+    margin = 2
     @now = Time.now
     factory = ClocksFactory.new(margin, pattern(@now), @now)
     @clocks = factory.create
