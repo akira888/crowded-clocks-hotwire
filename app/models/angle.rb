@@ -1,12 +1,12 @@
 class Angle
-  UP = 90
-  RIGHT = 180
-  DOWN = 270
-  LEFT = 0
-  UP_RIGHT = 135
-  UP_LEFT = 45
-  DOWN_RIGHT = 225
-  DOWN_LEFT = 315
+  UP = 0
+  RIGHT = 90
+  DOWN = 180
+  LEFT = 270
+  UP_RIGHT = 315
+  UP_LEFT = 135
+  DOWN_RIGHT = 45
+  DOWN_LEFT = 225
 
   KNOWN_KEYWORD = %w[up down left right up_right up_left down_right down_left].freeze
   DELIMITER = "+".freeze
