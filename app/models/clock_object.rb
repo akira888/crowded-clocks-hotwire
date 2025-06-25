@@ -1,5 +1,5 @@
 class ClockObject
-  include ActiveModel::API
+  # include ActiveModel::API
 
   attr_reader :now, :position, :pattern, :start
 
