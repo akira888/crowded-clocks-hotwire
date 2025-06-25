@@ -1,15 +1,14 @@
 class ClockObject
-  include ActiveModel::API
+  # include ActiveModel::API
 
   attr_reader :now, :position, :pattern, :start
 
-  def initialize(now, position, pattern, start = nil)
+  def initialize(now, position, pattern)
     @now = now
     @position = position
     @pattern = pattern
     @big_hand_angle = nil
     @small_hand_angle = nil
-    @start = start
   end
 
   def big_hand_angle

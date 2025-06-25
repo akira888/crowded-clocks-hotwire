@@ -4,30 +4,17 @@
       class="grid"
       style="grid-template-columns: repeat(<%= @cols %> , minmax(0, 1fr))"
       data-controller="clocks"
-      data-clocks-reset-value="<%= reset_interval?(@now) %>"
-      data-clocks-adjust-interval-value="<%= adjust_interval(@now) %>"
+      data-clocks-turbo-visit-value="<%= @turbo_visit %>"
       data-clocks-interval-outlet="#interval"
     >
-      <%= render partial: "clock", collection: @clocks, as: :clock %>
+      <%= render partial: "clock", collection: @clocks %>
     </div>
   <% end %>
   <div
-    data-controller="interval"
     id="interval"
+    data-controller="interval"
     class="col-start-1 row-start-1"
-    data-interval-interval-msec-value="<%= interval %>"
   >
     <a href="/" data-interval-target="reloadLink" data-turbo-frame="clocks"></a>
-    <div data-interval-target="debugTool" class="hidden">
-      <ul>
-        <li>
-          取得時間: <span><%= @now %></span>
-        </li>
-        <li>リセットの必要：<%= reset_interval?(@now) %></li>
-        <li>
-          初回再取得タイミング: <span><%= adjust_interval(@now) %></span>
-        </li>
-      </ul>
-    </div>
   </div>
 </div>

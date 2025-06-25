@@ -4,15 +4,13 @@ RSpec.describe ClocksFactory do
   let(:margin) { 2 }
   let(:pattern) { 'default' }
   let(:now) { Time.new(2025, 6, 20, 12, 30, 0) }
-  let(:start) { Time.new(2025, 6, 20, 12, 0) } # オプションのスタート時間
 
-  subject(:factory) { described_class.new(margin, pattern, now, start) }
+  subject(:factory) { described_class.new(margin, pattern, now) }
 
   describe '#initialize' do
     it 'インスタンス変数を正しく設定する' do
       expect(factory.margin).to eq(margin)
       expect(factory.pattern).to eq(pattern)
-      expect(factory.start).to eq(start)
     end
   end
 

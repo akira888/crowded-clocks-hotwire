@@ -3,16 +3,19 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="clocks"
 export default class extends Controller {
   static values = {
-    reset: Boolean,
-    adjustInterval: Number,
-    animateStarter: {type: Number, default: null}
+    animateStarter: {type: Number, default: null},
+    turboVisit: Boolean
   }
   static outlets = ['interval']
   static targets = ["hand"]
 
+  isTurboVisit() {
+    return !!this.turboVisitValue
+  }
+
   // Turbo Frames用
   connect() {
-    if (this.hasIntervalOutlet) {
+    if (this.isTurboVisit()) {
       this.callInterval()
     }
 
@@ -36,10 +39,10 @@ export default class extends Controller {
   }
 
   callInterval() {
-    if (this.resetValue) {
-      this.intervalOutlet.adjustInterval(this.adjustIntervalValue)
-    } else {
+    if (this.isTurboVisit()) {
       this.intervalOutlet.startInterval()
+    } else {
+      this.intervalOutlet.adjustInterval()
     }
   }
 

@@ -4,9 +4,8 @@ RSpec.describe Clock::Basic do
   let(:now) { Time.new(2025, 6, 20, 12, 30, 0) } # 2025年6月20日 12:30
   let(:position) { 'x' }
   let(:pattern) { 'pattern' }
-  let(:start) { Time.new(2025, 6, 20, 12, 0) } # オプションのスタート時間
 
-  subject(:clock) { described_class.new(now, position, pattern, start) }
+  subject(:clock) { described_class.new(now, position, pattern) }
 
   describe '時間帯に応じた針の動き' do
     before do
