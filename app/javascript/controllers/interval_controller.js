@@ -6,7 +6,7 @@ export default class extends Controller {
     intervalMsec: Number,
     resetKey: {type: Number, default: null}
   }
-  static targets = ['reloadLink', 'debugTool']
+  static targets = ['reloadLink']
 
   // 他のタイマーが発動していたら何もしない
   startInterval() {
