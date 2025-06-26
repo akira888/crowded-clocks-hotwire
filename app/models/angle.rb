@@ -3,9 +3,9 @@ class Angle
   RIGHT = 90
   DOWN = 180
   LEFT = 270
-  UP_RIGHT = 315
-  UP_LEFT = 135
-  DOWN_RIGHT = 45
+  UP_RIGHT = 45
+  UP_LEFT = 315
+  DOWN_RIGHT = 135
   DOWN_LEFT = 225
 
   KNOWN_KEYWORD = %w[up down left right up_right up_left down_right down_left].freeze
