@@ -10,15 +10,16 @@
  */
 :root {
   --hand-color: #888;
-  --rim-color: #f9f9fd;
+  --rim-color: #f3f3f6;
   --color-background: #fff;
   --color-text: #000;
 }
 .rim {
-  border: 2px solid var(--rim-color);
   width: 100%;
   border-radius: 50%;
   position: relative;
+  box-shadow:
+    inset -1px -1px 2px 0 var(--rim-color);
 }
 .big-hand::before,
 .small-hand::before {
