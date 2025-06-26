@@ -48,29 +48,28 @@ export default class extends Controller {
 
   animateHands() {
     const now = new Date()
-    const sec = now.getSeconds()
+    const halfMinute = 30
+    const staySeconds = 3
+    let nowSec = now.getSeconds()
+    if (nowSec >= halfMinute) nowSec -= halfMinute
     // 03秒以降または33秒以降ならアニメーション
-    if ((sec >= 3 && sec < 30) || (sec >= 33)) {
+    if (nowSec >= staySeconds) {
       // 実行開始したらトリガーを止める
       this.stopHandAnimationTimer()
 
       this.handTargets.forEach(hand => {
-        const to = hand.dataset.destinationAngle // ex. 180deg
+        const to = hand.dataset.destinationAngle
         if (!to) return
         // 現在の角度
-        const from = hand.style.rotate || "0deg"
+        const from = hand.style.rotate
         // 残り秒数
-        let remain = 0
-        if (sec >= 3 && sec < 30) {
-          remain = 30 - sec
-        } else if (sec >= 33) {
-          remain = 60 - sec
-        }
+        const duration = (halfMinute - nowSec) * 1000 - now.getMilliseconds()
+
         hand.animate([
           { rotate: from },
           { rotate: to }
         ], {
-          duration: remain * 1000,
+          duration: duration,
           fill: "forwards"
         })
       })
