@@ -3,6 +3,8 @@ module Clock
     include AnalogClock
     include TimeBasedMovement
 
+    VIEW_TYPE = :basic
+
     def big_hand_angle
       angles = hand_angles
       "#{angles[0]}deg"
@@ -19,6 +21,10 @@ module Clock
 
     def small_hand_destination_angle
       "#{destination_angles[1]}deg"
+    end
+
+    def view_type
+      VIEW_TYPE
     end
 
     private
