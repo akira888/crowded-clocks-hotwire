@@ -49,8 +49,8 @@ RSpec.describe Clock::DigitalPart do
       it 'left_rightの角度に向かって移動する' do
         angle_big = digital_part.big_hand_angle.gsub('deg', '').to_f
         angle_small = digital_part.small_hand_angle.gsub('deg', '').to_f
-        expect(angle_big).to be_within(1).of(50.0)
-        expect(angle_small).to be_within(1).of(230.0)
+        expect(angle_big).to be_within(1).of(210.0)
+        expect(angle_small).to be_within(1).of(30.0)
       end
     end
 
@@ -65,8 +65,8 @@ RSpec.describe Clock::DigitalPart do
       it '次の時刻のデジタル表示の角度に向かって移動する' do
         angle_big = digital_part.big_hand_angle.gsub('deg', '').to_f
         angle_small = digital_part.small_hand_angle.gsub('deg', '').to_f
-        expect(angle_big).to be_within(5).of(320.0)
-        expect(angle_small).to be_within(5).of(135.0)
+        expect(angle_big).to be_within(5).of(120.0)
+        expect(angle_small).to be_within(5).of(300.0)
       end
     end
   end

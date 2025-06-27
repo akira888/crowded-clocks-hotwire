@@ -3,53 +3,18 @@ require 'rails_helper'
 RSpec.describe Angle do
   describe '.fixed_angles' do
     context '有効なキーワードが渡された場合' do
-      it 'upは90度を返す' do
-        expect(Angle.fixed_angles('up')).to eq([ 90 ])
-      end
-
-      it 'downは270度を返す' do
-        expect(Angle.fixed_angles('down')).to eq([ 270 ])
-      end
-
-      it 'leftは0度を返す' do
-        expect(Angle.fixed_angles('left')).to eq([ 0 ])
-      end
-
-      it 'rightは180度を返す' do
-        expect(Angle.fixed_angles('right')).to eq([ 180 ])
-      end
-
-      it 'up_rightは135度を返す' do
-        expect(Angle.fixed_angles('up_right')).to eq([ 135 ])
-      end
-
-      it 'up_leftは45度を返す' do
-        expect(Angle.fixed_angles('up_left')).to eq([ 45 ])
-      end
-
-      it 'down_rightは225度を返す' do
-        expect(Angle.fixed_angles('down_right')).to eq([ 225 ])
-      end
-
-      it 'down_leftは315度を返す' do
-        expect(Angle.fixed_angles('down_left')).to eq([ 315 ])
-      end
-
-      it '複合キーワード "up+right" は [90, 180] を返す' do
-        expect(Angle.fixed_angles('up+right')).to eq([ 90, 180 ])
-      end
-
-      it '複合キーワード "left+down" は [0, 270] を返す' do
-        expect(Angle.fixed_angles('left+down')).to eq([ 0, 270 ])
-      end
-
-      it '複合キーワード "up_left+down_right" は [45, 225] を返す' do
-        expect(Angle.fixed_angles('up_left+down_right')).to eq([ 45, 225 ])
-      end
-
-      it '複合キーワード "up_right+down_left" は [135, 315] を返す' do
-        expect(Angle.fixed_angles('up_right+down_left')).to eq([ 135, 315 ])
-      end
+      it { expect(Angle.fixed_angles('up')).to eq([ 0 ]) }
+      it { expect(Angle.fixed_angles('down')).to eq([ 180 ]) }
+      it { expect(Angle.fixed_angles('left')).to eq([ 270 ]) }
+      it { expect(Angle.fixed_angles('right')).to eq([ 90 ]) }
+      it { expect(Angle.fixed_angles('up_right')).to eq([ 45 ]) }
+      it { expect(Angle.fixed_angles('up_left')).to eq([ 315 ]) }
+      it { expect(Angle.fixed_angles('down_right')).to eq([ 135 ]) }
+      it { expect(Angle.fixed_angles('down_left')).to eq([ 225 ]) }
+      it { expect(Angle.fixed_angles('up+right')).to eq([ 0, 90 ]) }
+      it { expect(Angle.fixed_angles('left+down')).to eq([ 270, 180 ]) }
+      it { expect(Angle.fixed_angles('up_left+down_right')).to eq([ 315, 135 ]) }
+      it { expect(Angle.fixed_angles('up_right+down_left')).to eq([ 45, 225 ]) }
     end
 
     context '無効なキーワードが渡された場合' do

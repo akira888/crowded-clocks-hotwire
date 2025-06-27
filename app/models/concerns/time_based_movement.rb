@@ -59,7 +59,6 @@ module TimeBasedMovement
   def calculate_angle_transition(start_angle, target_angle, elapsed_time, total_time)
     # 角度の差分を計算（時計回りか反時計回りかの最短経路を決定）
     diff = (target_angle - start_angle) % 360
-    diff = diff > 180 ? diff - 360 : diff
 
     # 経過時間に基づいて現在の角度を計算
     progress = [ elapsed_time.to_f / total_time, 1.0 ].min
