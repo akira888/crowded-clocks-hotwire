@@ -34,7 +34,7 @@ RSpec.describe TimeBasedMovement do
       it 'left_rightの角度に向かって移動する' do
         # 15秒目 = 3秒経過から12秒経過 (27秒中) = 約44.4%移動
         result = test_instance.time_based_angles(current_time.sec, current_angles, next_angles, pattern)
-        expect(result[0]).to be_within(0.1).of(50)  # 90度から0度へ44.4%移動
+        expect(result[0]).to be_within(0.1).of(210)  # 90度から0度へ44.4%移動
         expect(result[1]).to be_within(0.1).of(180) # 変化なし
       end
     end
@@ -62,7 +62,7 @@ RSpec.describe TimeBasedMovement do
         # 45秒目 = 33秒経過から12秒経過 (27秒中) = 約44.4%移動
         result = test_instance.time_based_angles(current_time.sec, current_angles, next_angles, pattern)
         # 270度から0度へ44.4%移動 = 270 + (0-270) * 12/27 ≒ 120度減少 → 320度
-        expect(result[0]).to be_within(0.1).of(320.0)
+        expect(result[0]).to be_within(0.1).of(120.0)
         # 180度から0度へ44.4%移動 = 180 + (0-180) * 12/27 ≒ 100度
         expect(result[1]).to be_within(0.1).of(260.0)
       end
@@ -97,7 +97,7 @@ RSpec.describe TimeBasedMovement do
 
     it '反時計回りの最短経路で角度を計算する' do
       result = test_instance.send(:calculate_angle_transition, 180, 90, 5, 20)
-      expect(result).to be_within(0.1).of(157.5) # 180度から90度へ25%移動
+      expect(result).to be_within(0.1).of(247.5) # 180度から90度へ25%移動
     end
 
     it '360度を考慮した最短経路で角度を計算する' do

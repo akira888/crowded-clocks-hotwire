@@ -9,18 +9,18 @@
  * Consider organizing styles into separate files for maintainability.
  */
 :root {
-  --hand-color: #666;
-  --rim-color: #fdfdfd;
+  --hand-color: #888;
+  --rim-color: #f3f3f6;
   --color-background: #fff;
   --color-text: #000;
 }
 .rim {
-  border: 2px solid var(--rim-color);
   width: 100%;
   border-radius: 50%;
   position: relative;
+  box-shadow:
+    inset -1px -1px 2px 0 var(--rim-color);
 }
-.rim::before,
 .big-hand::before,
 .small-hand::before {
   content: '';
@@ -30,32 +30,17 @@
 .big-hand,
 .small-hand {
   display: block;
-  position: absolute;
-}
-.small-hand {
-  left: 9%;
-  top: 9%;
-  width: 82%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;  /* 相対的な幅 */
+  height: 100%; /* 相対的な高さ */
 }
 .big-hand {
-  width: 95%;
-  left: calc(2.5%);
-  top: 2.5%;
+    background-image: url('minute-hand.svg');
 }
-.big-hand::after,
-.small-hand::after {
-  content: '';
-  display: block;
-  height: 2px;
-  background-color: var(--hand-color);
-  width: 50%;
-  position: absolute;
-}
-.big-hand::after {
-  top: calc(50% - 1px);
-}
-.small-hand::after {
-  top: calc(50% - 1px);
+.small-hand {
+  background-image: url('hour-hand.svg');
 }
 b {
   color: blueviolet;

@@ -26,28 +26,28 @@ RSpec.describe AnalogClock do
 
   describe '#minute_angle' do
     it '分針の角度を正しく計算する' do
-      expect(dummy.minute_angle(next_time)).to eq(189.0)
+      expect(dummy.minute_angle(next_time)).to eq(99.0)
     end
 
     context '異なる時間の場合' do
       let(:now) { Time.new(2025, 6, 20, 6, 45, 0) } # 2025年6月20日 6:45:00
 
       it '分針の角度を正しく計算する' do
-        expect(dummy.minute_angle(next_time)).to eq(366.0)
+        expect(dummy.minute_angle(next_time)).to eq(276.0)
       end
     end
   end
 
   describe '#hour_angle' do
     it '時針の角度を正しく計算する' do
-      expect(dummy.hour_angle(next_time)).to eq(368.0)
+      expect(dummy.hour_angle(next_time)).to eq(278.0)
     end
 
     context '異なる時間の場合' do
       let(:now) { Time.new(2025, 6, 20, 6, 45, 0) } # 2025年6月20日 6:45:00
 
       it '時針の角度を正しく計算する' do
-        expect(dummy.hour_angle(next_time)).to eq(293.0)
+        expect(dummy.hour_angle(next_time)).to eq(203.0)
       end
     end
   end

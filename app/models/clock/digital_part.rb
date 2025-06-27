@@ -4,6 +4,8 @@ module Clock
     include TimeBasedMovement
     attr_reader :group
 
+    VIEW_TYPE = :digital_part
+
     def initialize(now, position, pattern, group)
       super(now, position, pattern)
       @group = group
@@ -25,6 +27,10 @@ module Clock
 
     def small_hand_destination_angle
       "#{destination_angles[1]}deg"
+    end
+
+    def view_type
+      VIEW_TYPE
     end
 
     private
